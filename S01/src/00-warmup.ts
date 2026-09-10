@@ -7,30 +7,30 @@
 // Нельзя: any, as, ! и @ts-ignore. Менять можно и типы, и сам код.
 
 // 1
-let count: number = "42";
+let count: number = 42;
 
 // 2
-const ids: number[] = [1, 2, "3"];
+const ids: number[] = [1, 2, 3];
 
 // 3
 function len(x: string | null) {
-    return x.length;
+    return x?.length;
 }
 
 // 4
-const user: { name: string; age?: number } = { name: "Аня", age: null };
+const user: { name: string; age?: number } = {name: "Аня", age: 0};
 
 // 5
-function first(xs: string[]): string {
+function first(xs: string[]): string | undefined {
     return xs[0];
 }
 
 // 6
-const label: "on" | "off" = "ON".toLowerCase();
+const label: "on" | "off" = "on";
 
 // 7
 function area(width: number, height: number): number {
-    const value = width * height;
+    return width * height;
 }
 
 export { count, ids, len, user, first, label, area };
