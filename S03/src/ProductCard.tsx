@@ -1,6 +1,17 @@
-export default function ProductCard({
-                                        product, qty, onAdd, onRemove
-                                    }) {
+import {memo} from "react";
+import type {Product} from "./cart.ts";
+
+interface ProductCardProps {
+    product: Product;
+    qty: number;
+    onAdd: (product: Product) => void;
+    onRemove: (id: number) => void;
+}
+
+const ProductCard = memo(function ProductCard({
+                                                  product, qty, onAdd, onRemove
+                                              }: ProductCardProps) {
+    console.log("render", product.id);
 
     return (
         <article className="product-card">
@@ -14,14 +25,12 @@ export default function ProductCard({
                     <div className="cart-item-controls">
                         <button
                             className="cart-quantity"
-                            role="button"
                             onClick={() => onAdd(product)}
                         >
                             В корзине: {qty}
                         </button>
                         <button
                             className="button button-outline"
-                            type="button"
                             onClick={() => onRemove(product.id)}
                         >
                             Убрать
@@ -30,7 +39,6 @@ export default function ProductCard({
                 ) : (
                     <button
                         className="button button-primary add-button"
-                        type="button"
                         disabled={!product.inStock}
                         onClick={() => onAdd(product)}
                     >
@@ -40,4 +48,6 @@ export default function ProductCard({
             </div>
         </article>
     );
-}
+});
+
+export default ProductCard;

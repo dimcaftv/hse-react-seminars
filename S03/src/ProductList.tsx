@@ -2,7 +2,7 @@ import ProductCard from "./ProductCard.tsx";
 
 export default function ProductList({
                                         products,
-                                        cart,
+                                        qtyById,
                                         onAdd,
                                         onRemove
                                     }) {
@@ -15,7 +15,7 @@ export default function ProductList({
             {products.map((product) => (
                 <ProductCard
                     product={product}
-                    qty={cart.items.find((item) => item.product.id === product.id)?.qty ?? 0}
+                    qty={qtyById[product.id] ?? 0}
                     onAdd={onAdd}
                     onRemove={onRemove}
                 />
