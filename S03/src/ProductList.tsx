@@ -11,7 +11,7 @@ export default function ProductList({
     }
 
     return (
-        <section className="product-list" aria-label="Список товаров">
+        <section className="product-list">
             {products.map((product) => (
                 <ProductCard
                     product={product}

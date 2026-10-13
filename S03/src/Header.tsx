@@ -6,7 +6,7 @@ export default function Header({itemCount, totalPrice, onClear}) {
                 <p>
                     Корзина: {itemCount} шт. {totalPrice} ₽
                 </p>
-                <button className="button button-outline" type="button" onClick={onClear}>
+                <button className="button button-outline" onClick={onClear}>
                     Очистить
                 </button>
             </div>

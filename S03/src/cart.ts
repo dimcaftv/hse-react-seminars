@@ -1,3 +1,5 @@
+import {useCallback, useMemo, useReducer} from "react";
+
 export interface Product {
     id: number;
     title: string;
@@ -5,12 +7,12 @@ export interface Product {
     inStock: boolean;
 }
 
-export interface CartItem {
+interface CartItem {
     product: Product;
     qty: number;
 }
 
-export interface CartState {
+interface CartState {
     items: CartItem[];
 }
 
@@ -19,7 +21,7 @@ type CartAction =
     | { type: "remove"; id: number }
     | { type: "clear" };
 
-export const initialCart: CartState = {items: []};
+const initialCart: CartState = {items: []};
 
 export function cartReducer(state: CartState, action: CartAction): CartState {
     switch (action.type) {
@@ -49,4 +51,44 @@ export function cartReducer(state: CartState, action: CartAction): CartState {
         default:
             return state;
     }
+}
+
+export function useCart() {
+    const [cart, dispatch] = useReducer(cartReducer, initialCart);
+
+    const onAdd = useCallback((product: Product) => {
+        dispatch({type: "add", product});
+    }, []);
+
+    const onRemove = useCallback((id: number) => {
+        dispatch({type: "remove", id});
+    }, []);
+
+    const onClear = useCallback(() => {
+        dispatch({type: "clear"});
+    }, []);
+
+    const qtyById = useMemo(() => {
+        const quantities = {};
+        cart.items.forEach((item) => {
+            quantities[item.product.id] = item.qty;
+        });
+        return quantities;
+    }, [cart.items]);
+
+    const totalCount = useMemo(
+        () => cart.items.reduce((total, item) => total + item.qty, 0),
+        [cart.items]
+    );
+
+    const totalPrice = useMemo(
+        () =>
+            cart.items.reduce(
+                (total, item) => total + item.product.price * item.qty,
+                0,
+            ),
+        [cart.items]
+    );
+
+    return {totalCount, totalPrice, qtyById, onAdd, onRemove, onClear};
 }

@@ -1,38 +1,32 @@
-import {useCallback, useMemo, useReducer, useState} from "react";
+import {useMemo, useState, useTransition} from "react";
 import {products} from "./data.js";
 import Header from "./Header.tsx";
 import SearchBar from "./SearchBar.tsx";
 import ProductList from "./ProductList.tsx";
-import {cartReducer, initialCart, type Product} from "./cart.ts";
+import {useCart} from "./cart.ts";
 
 
 export default function App() {
     const [query, setQuery] = useState("");
     const [onlyInStock, setOnlyInStock] = useState(false);
-    const [cart, dispatch] = useReducer(cartReducer, initialCart);
+    const [filter, setFilter] = useState("");
+    const [isPending, startTransition] = useTransition();
+
+    const {totalCount, totalPrice, qtyById, onAdd, onRemove, onClear} = useCart();
+
+
+    function handleSearch(value: string) {
+        setQuery(value);
+        startTransition(() => setFilter(value));
+    }
 
     const visible = useMemo(() => {
-        const q = query.trim().toLowerCase();
+        const q = filter.trim().toLowerCase();
 
         return products.filter((p) => {
             return p.title.toLowerCase().includes(q) && (!onlyInStock || p.inStock);
         });
-    }, [query, onlyInStock]);
-
-    const totalCount = cart.items.reduce((total, item) => total + item.qty, 0);
-    const totalPrice = cart.items.reduce((total, item) => total + item.product.price * item.qty, 0);
-
-    const onAdd = useCallback((product: Product) => dispatch({type: "add", product}), []);
-    const onRemove = useCallback((id: number) => dispatch({type: "remove", id}), []);
-    const onClear = useCallback(() => dispatch({type: "clear"}), []);
-
-    const qtyById = useMemo(() => {
-        const quantities = {};
-        cart.items.forEach((item) => {
-            quantities[item.product.id] = item.qty;
-        });
-        return quantities;
-    }, [cart.items]);
+    }, [filter, onlyInStock]);
 
     return (
         <div className="store">
@@ -44,9 +38,14 @@ export default function App() {
                 query={query}
                 onlyInStock={onlyInStock}
                 resultCount={visible.length}
-                onQueryChange={setQuery}
+                onQueryChange={handleSearch}
                 onOnlyInStockChange={setOnlyInStock}
             />
+            <p
+                className="pending-message"
+            >
+                {isPending ? "Обновляем список…" : ""}
+            </p>
             <ProductList
                 products={visible}
                 qtyById={qtyById}

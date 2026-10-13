@@ -14,7 +14,7 @@ export default function SearchBar({
     }, []);
 
     return (
-        <section className="search-bar" aria-label="Поиск товаров">
+        <section className="search-bar">
             <input
                 ref={inputRef}
                 className="search-input"
