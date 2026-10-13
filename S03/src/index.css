@@ -1,0 +1,264 @@
+:root {
+    font-family: Arial, Helvetica, sans-serif;
+    color: #102d5b;
+    background: #fff;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-weight: 400;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    min-width: 320px;
+    margin: 0;
+}
+
+button,
+input {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+button:disabled {
+    cursor: not-allowed;
+}
+
+.store {
+    width: min(100% - 48px, 1260px);
+    margin: 24px auto;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 16px 24px;
+    background: #edf3fa;
+}
+
+.header h1,
+.cart-summary p {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.cart-summary {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.button {
+    min-height: 50px;
+    padding: 10px 24px;
+    border: 2px solid #8aa9dc;
+    background: #fff;
+    color: #102d5b;
+    font-size: 20px;
+}
+
+.button-outline:hover:not(:disabled) {
+    background: #edf3fa;
+}
+
+.search-bar {
+    display: grid;
+    grid-template-columns: minmax(260px, 1fr) auto minmax(140px, 1fr);
+    align-items: center;
+    gap: 28px;
+    margin: 24px 0;
+}
+
+.search-input {
+    width: 100%;
+    min-height: 72px;
+    padding: 16px 18px;
+    border: 2px solid #8aa9dc;
+    color: inherit;
+    font-size: 22px;
+}
+
+.search-input::placeholder,
+.result-count {
+    color: #8795a8;
+}
+
+.stock-filter {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    white-space: nowrap;
+    font-size: 22px;
+}
+
+.stock-filter input {
+    width: 30px;
+    height: 30px;
+    margin: 0;
+    accent-color: #294f9f;
+}
+
+.result-count {
+    margin: 0;
+    text-align: right;
+    font-size: 22px;
+}
+
+.pending-message {
+    min-height: 24px;
+    margin: -10px 0 16px;
+    color: #8795a8;
+    font-size: 18px;
+}
+
+.product-list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.product-card {
+    display: flex;
+    min-height: 240px;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 20px 18px 14px;
+    border: 2px solid #8aa9dc;
+}
+
+.product-card h2 {
+    margin: 0 0 10px;
+    font-size: 27px;
+}
+
+.product-price,
+.stock-status {
+    margin: 0 0 8px;
+    font-size: 22px;
+}
+
+.in-stock {
+    color: #00a56a;
+}
+
+.out-of-stock,
+.empty-state {
+    color: #8795a8;
+}
+
+.add-button {
+    width: 100%;
+    margin-top: auto;
+    border-color: #294f9f;
+    background: #294f9f;
+    color: #fff;
+    font-weight: 700;
+}
+
+.add-button:hover:not(:disabled) {
+    background: #1e3f83;
+}
+
+.add-button:disabled {
+    border-color: #e5e5e5;
+    background: #e5e5e5;
+    color: #8795a8;
+}
+
+.card-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: auto;
+}
+
+.cart-item-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.cart-quantity {
+    flex: 1;
+    padding: 13px 10px;
+    background: #d6e3f4;
+    font-size: 20px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.empty-state {
+    font-size: 20px;
+}
+
+@media (max-width: 800px) {
+    .product-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .search-bar {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .search-input {
+        grid-column: 1 / -1;
+    }
+
+    .result-count {
+        text-align: right;
+    }
+}
+
+@media (max-width: 560px) {
+    .store {
+        width: min(100% - 24px, 420px);
+        margin: 12px auto;
+    }
+
+    .header,
+    .cart-summary {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .header,
+    .cart-summary {
+        width: 100%;
+    }
+
+    .cart-summary {
+        gap: 12px;
+    }
+
+    .header h1,
+    .cart-summary p {
+        font-size: 23px;
+    }
+
+    .search-bar {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .search-input {
+        grid-column: auto;
+    }
+
+    .result-count {
+        text-align: left;
+    }
+
+    .product-list {
+        grid-template-columns: 1fr;
+    }
+}
